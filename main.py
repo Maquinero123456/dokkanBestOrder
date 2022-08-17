@@ -20,10 +20,10 @@ def main():
     #Introduce friend
     friend=""
     while(friend==""):
-        aux = input("Friend: ").strip()
+        aux = input("Friend(Leave blank to repeat leader): ").strip()
         try:
             if(aux==""):
-                print("Character cant be empty")
+                friend = personajesABuscar[0]
             else:
                friend = int(aux)
         except TypeError:
@@ -43,7 +43,7 @@ def main():
     #Show searched characters
     print("PERSONAJES:")
     for i in range(len(personajes)):
-        print(str(i)+". "+personajes[i][0])
+        print(str(i+1)+". "+personajes[i][0])
 
     #Create perfect team
     timoOptimizar = teamOptimizer(personajes)
@@ -51,7 +51,7 @@ def main():
     #Show perfect team
     print("EQUIPO PERFECTO:")
     for i in range(len(optimizado)):
-        print(str(i)+". "+optimizado[i][0])
+        print(str(i+1)+". "+optimizado[i][0])
 
 if __name__ == "__main__":
     main()

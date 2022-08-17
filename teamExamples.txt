@@ -1,3 +1,4 @@
+This is how rotations looks like
 ----1----
 1 - 2 - 5
 ----2----
@@ -11,7 +12,7 @@
 ----6----
 3 - 4 - 7
 
-Equipo 1:
+Team 1:
 Super Saiyan Broly - 1016871
 Jiren (Full Power) - 1019911
 Super Saiyan Goku -  1007471
@@ -20,7 +21,7 @@ Goku (Youth) & Bulma (Youth) - 1017381
 Super Saiyan Gohan (Future) & Trunks (Youth) (Future) - 1023421
 Krillin & Gohan (Kid) - 1022941
 
-Equipo jiren:
+jiren team(It is in good order):
 Jiren (Full Power) - 1019911
 Toppo (God of Destruction Mode) - 1013881
 Super Saiyan God SS Evolved Vegeta - 1020341
