@@ -1,28 +1,57 @@
 from characterSearch import characterSearch
 from teamOptimizer import teamOptimizer
-#BUSCAR CODIGOS DE PERSONAJES EN https://dokkan.fyi/characters
+
+#Search characters codes at https://dokkan.fyi/characters
+
 def main(): 
-    
+
+    #Introduce character to search
     personajesABuscar= []
     while len(personajesABuscar)<6:
-        personajesABuscar.append(input("Personaje a buscar numero "+str(len(personajesABuscar)+1)+":"))
+        aux = input("Character number "+str(len(personajesABuscar)+1)+":").strip()
+        try:
+            if(aux==""):
+                print("Character cant be empty")
+            else:
+                personajesABuscar.append(int(aux))
+        except ValueError:
+            print("You must introduce character code with just numbers")
 
-    personajesABuscar.append(input("Personaje amigo: "))
+    #Introduce friend
+    friend=""
+    while(friend==""):
+        aux = input("Friend: ").strip()
+        try:
+            if(aux==""):
+                print("Character cant be empty")
+            else:
+               friend = int(aux)
+        except TypeError:
+            print("You must introduce character code with just numbers or must be non empty")
+    personajesABuscar.append(friend)
+
+    #Search characters
     personajes = []
-
     search = characterSearch()
+    try:
+        for i in range(len(personajesABuscar)):
+            personajes.append(search.buscarPersonaje(personajesABuscar[i]))
+    except ValueError:
+        print("Character "+str(i+1)+" doesn't exist or wrong code")
+        quit()
 
-    for i in range(len(personajesABuscar)):
-        personajes.append(search.buscarPersonaje(personajesABuscar[i]))
+    #Show searched characters
     print("PERSONAJES:")
     for i in range(len(personajes)):
         print(str(i)+". "+personajes[i][0])
-    print("EQUIPO PERFECTO:")
+
+    #Create perfect team
     timoOptimizar = teamOptimizer(personajes)
     optimizado = timoOptimizar.optimizador()
+    #Show perfect team
+    print("EQUIPO PERFECTO:")
     for i in range(len(optimizado)):
         print(str(i)+". "+optimizado[i][0])
-    
 
 if __name__ == "__main__":
     main()
