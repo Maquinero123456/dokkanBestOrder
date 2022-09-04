@@ -1,26 +1,36 @@
 from characterSearch import characterSearch
 from teamOptimizer import teamOptimizer
+from termcolor import colored, cprint
+import signal
+import sys
 
-#Search characters codes at https://dokkan.fyi/characters
+def signal_handler(sig, frame):
+    cprint('\nSaliendo...', "red")
+    sys.exit(0)
 
 def main(): 
+    signal.signal(signal.SIGINT, signal_handler)
+    cprint("\nSearch characters codes at https://dokkan.fyi/characters\n", "green")
 
+    cprint("Character to search:", "green")
     #Introduce character to search
     personajesABuscar= []
     while len(personajesABuscar)<6:
-        aux = input("Character number "+str(len(personajesABuscar)+1)+":").strip()
+        cprint("Character number "+str(len(personajesABuscar)+1)+":", "green", end = " ")
+        aux = input().strip()
         try:
             if(aux==""):
-                print("Character cant be empty")
+                cprint("Character cant be empty", "red")
             else:
                 personajesABuscar.append(int(aux))
         except ValueError:
-            print("You must introduce character code with just numbers")
+            cprint("You must introduce character code with just numbers", "red")
 
     #Introduce friend
     friend=""
     while(friend==""):
-        aux = input("Friend(Leave blank to repeat leader): ").strip()
+        cprint("Friend(Leave blank to repeat leader): ", "green", end = " ")
+        aux = input().strip()
         try:
             if(aux==""):
                 friend = personajesABuscar[0]
@@ -37,21 +47,23 @@ def main():
         for i in range(len(personajesABuscar)):
             personajes.append(search.buscarPersonaje(personajesABuscar[i]))
     except ValueError:
-        print("Character "+str(i+1)+" doesn't exist or wrong code")
+        cprint("Character "+str(i+1)+" doesn't exist or wrong code", "red")
         quit()
 
     #Show searched characters
-    print("PERSONAJES:")
+    cprint("PERSONAJES:", "green")
     for i in range(len(personajes)):
-        print(str(i+1)+". "+personajes[i][0])
+        cprint(str(i+1)+".", "green", end = " ")
+        print(personajes[i][0])
 
     #Create perfect team
     timoOptimizar = teamOptimizer(personajes)
     optimizado = timoOptimizar.optimizador()
     #Show perfect team
-    print("EQUIPO PERFECTO:")
+    cprint("EQUIPO PERFECTO:", "green")
     for i in range(len(optimizado)):
-        print(str(i+1)+". "+optimizado[i][0])
+        cprint(str(i+1)+".", "green", end = " ")
+        print(optimizado[i][0])
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,13 @@
 import itertools
 
+#TODO Media
+
 class teamOptimizer:
     #Create class with starting team
     def __init__(self, team):
         self.team = team
         self.links = self.checkLinks(team)
+        self.linksMedia = self.checkLinksMedia(team)
 
     #Checks best team between all posible permutations
     def optimizador(self):
@@ -35,6 +38,29 @@ class teamOptimizer:
 
         return self.team
 
+    #Optimizador Media
+    def optimizadorMedia(self):
+        teamList = list(self.team)
+        leader = teamList[0]
+        friend = teamList[6]
+        slice = teamList[1:6]
+        #Create all possible permutations
+        permutaciones = list(itertools.permutations(slice))
+        #Check all permutations
+        for i in range(len(permutaciones)):
+            rotacion = []
+            rotacion+= [leader]
+            rotacion+= permutaciones[i]
+            rotacion+= [friend]
+            links = self.checkLinksMedia(rotacion)
+
+            #If new team is better exchange them with base team
+            if links > self.linksMedia :
+                self.team = rotacion
+                self.links = links
+
+        return self.team
+
     #Check all links of a team in a rotation and return a list with the number of links
     def checkLinks(self, team : list) -> list:
         personajesList = team
@@ -45,6 +71,16 @@ class teamOptimizer:
         teamLinks+=(self.linkComparator(personajesList[0][1], personajesList[1][1], personajesList[5][1]))
         teamLinks+=(self.linkComparator(personajesList[2][1], personajesList[3][1], personajesList[6][1]))
         return teamLinks
+
+    def checkLinksMedia(self, team : list) -> int:
+        personajesList = team
+        teamLinks = (self.linkComparator(personajesList[0][1], personajesList[1][1], personajesList[4][1]))
+        teamLinks+=(self.linkComparator(personajesList[2][1], personajesList[3][1], personajesList[5][1]))
+        teamLinks+=(self.linkComparator(personajesList[0][1], personajesList[1][1], personajesList[6][1]))
+        teamLinks+=(self.linkComparator(personajesList[2][1], personajesList[3][1], personajesList[4][1]))
+        teamLinks+=(self.linkComparator(personajesList[0][1], personajesList[1][1], personajesList[5][1]))
+        teamLinks+=(self.linkComparator(personajesList[2][1], personajesList[3][1], personajesList[6][1]))
+        return sum(teamLinks)
 
     #Check number of links between three characters and return then in a list [character 1 - character 2, character 2 - character 3]
     def linkComparator(self, links1 : list, links2:list, links3:list) -> list:
