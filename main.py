@@ -8,28 +8,31 @@ def signal_handler(sig, frame):
     cprint('\nSaliendo...', "red")
     sys.exit(0)
 
-def main(): 
+def main():
     signal.signal(signal.SIGINT, signal_handler)
-    cprint("\nSearch characters codes at https://dokkan.fyi/characters\n", "green")
+    cprint("Busca los codigos de personajes en https://dokkan.fyi/characters\n", "green")
 
-    cprint("Character to search:", "green")
+    cprint("Personajes a buscar:", "green")
     #Introduce character to search
     personajesABuscar= []
     while len(personajesABuscar)<6:
-        cprint("Character number "+str(len(personajesABuscar)+1)+":", "green", end = " ")
+        if(len(personajesABuscar)==0):
+            cprint("Personaje "+str(len(personajesABuscar)+1)+"(Lider):", "green", end = " ")
+        else:
+            cprint("Personaje"+str(len(personajesABuscar)+1)+":", "green", end = " ")
         aux = input().strip()
         try:
             if(aux==""):
-                cprint("Character cant be empty", "red")
+                cprint("No puede estar vacio", "red")
             else:
                 personajesABuscar.append(int(aux))
         except ValueError:
-            cprint("You must introduce character code with just numbers", "red")
+            cprint("Solo introducir numeros", "red")
 
     #Introduce friend
     friend=""
     while(friend==""):
-        cprint("Friend(Leave blank to repeat leader): ", "green", end = " ")
+        cprint("Amigo(Deja en blanco para repetir lider): ", "green", end = " ")
         aux = input().strip()
         try:
             if(aux==""):
@@ -37,7 +40,7 @@ def main():
             else:
                friend = int(aux)
         except TypeError:
-            print("You must introduce character code with just numbers or must be non empty")
+            cprint("Solo introducir numeros", "red")
     personajesABuscar.append(friend)
 
     #Search characters
@@ -47,7 +50,7 @@ def main():
         for i in range(len(personajesABuscar)):
             personajes.append(search.buscarPersonaje(personajesABuscar[i]))
     except ValueError:
-        cprint("Character "+str(i+1)+" doesn't exist or wrong code", "red")
+        cprint("Personaje "+str(i+1)+" no existe o id mal", "red")
         quit()
 
     #Show searched characters
