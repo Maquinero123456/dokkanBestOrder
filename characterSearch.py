@@ -24,7 +24,7 @@ class characterSearch:
 
         #If character doesnt exist throw error
         if(response.status_code!=200):
-            raise ValueError("Character doesnt exist or wrong code")
+            raise TypeError("Character doesnt exist or wrong code")
 
         #Add character name to list
         nombre = response.json()["props"]["card"]["name"]

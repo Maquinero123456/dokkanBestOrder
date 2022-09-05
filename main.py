@@ -12,49 +12,51 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     cprint("Busca los codigos de personajes en https://dokkan.fyi/characters\n", "green")
 
+    #Search characters
+    personajes = []
+    search = characterSearch()
+
     cprint("Personajes a buscar:", "green")
     #Introduce character to search
-    personajesABuscar= []
-    while len(personajesABuscar)<6:
-        if(len(personajesABuscar)==0):
-            cprint("Personaje "+str(len(personajesABuscar)+1)+"(Lider):", "green", end = " ")
+    while len(personajes)<6:
+        if(len(personajes)==0):
+            cprint("Personaje "+str(len(personajes)+1)+"(Lider):", "green", end = " ")
         else:
-            cprint("Personaje"+str(len(personajesABuscar)+1)+":", "green", end = " ")
+            cprint("Personaje "+str(len(personajes)+1)+":", "green", end = " ")
         aux = input().strip()
         try:
             if(aux==""):
                 cprint("No puede estar vacio", "red")
             else:
-                personajesABuscar.append(int(aux))
+                personaje = search.buscarPersonaje(int(aux))
+                if personaje in personajes:
+                    raise AttributeError("")
+                personajes.append(personaje)
+                cprint(personajes[len(personajes)-1][0], "yellow")
         except ValueError:
             cprint("Solo introducir numeros", "red")
+        except TypeError:
+            cprint("Personaje "+aux+" no existe o id mal", "red")
+        except AttributeError:
+            cprint("Personaje repetido", "red")
 
     #Introduce friend
-    friend=""
-    while(friend==""):
+    while len(personajes)<7:
         cprint("Amigo(Deja en blanco para repetir lider): ", "green", end = " ")
         aux = input().strip()
         try:
             if(aux==""):
-                friend = personajesABuscar[0]
+                personajes.append(personajes[0])
             else:
-               friend = int(aux)
+               personajes.append(search.buscarPersonaje(int(aux)))
+            cprint(personajes[6][0], "yellow")
         except TypeError:
             cprint("Solo introducir numeros", "red")
-    personajesABuscar.append(friend)
-
-    #Search characters
-    personajes = []
-    search = characterSearch()
-    try:
-        for i in range(len(personajesABuscar)):
-            personajes.append(search.buscarPersonaje(personajesABuscar[i]))
-    except ValueError:
-        cprint("Personaje "+str(i+1)+" no existe o id mal", "red")
-        quit()
+        except TypeError:
+            cprint("Personaje "+aux+" no existe o id mal", "red")
 
     #Show searched characters
-    cprint("PERSONAJES:", "green")
+    cprint("\nPERSONAJES:", "green")
     for i in range(len(personajes)):
         cprint(str(i+1)+".", "green", end = " ")
         print(personajes[i][0])
@@ -63,7 +65,7 @@ def main():
     timoOptimizar = teamOptimizer(personajes)
     optimizado = timoOptimizar.optimizador()
     #Show perfect team
-    cprint("EQUIPO PERFECTO:", "green")
+    cprint("\nEQUIPO PERFECTO:", "green")
     for i in range(len(optimizado)):
         cprint(str(i+1)+".", "green", end = " ")
         print(optimizado[i][0])
