@@ -70,5 +70,9 @@ def main():
         cprint(str(i+1)+".", "green", end = " ")
         print(optimizado[i][0])
 
+    cprint("\nPresiona enter para cerrar...", "green", end=" ")
+    input()
+    exit(0)
+
 if __name__ == "__main__":
     main()
