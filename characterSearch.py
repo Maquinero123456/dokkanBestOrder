@@ -28,8 +28,9 @@ class characterSearch:
 
         #Add character name to list
         nombre = response.json()["props"]["card"]["name"]
+        subnombre = response.json()["props"]["card"]["leader_skill_set"]["name"]
         nombre=nombre.replace('\n', '')
-        dict = [nombre]
+        dict = [subnombre+" "+nombre+"("+str(id)+")"]
 
         #Add all character links skills to list
         x = True
