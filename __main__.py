@@ -31,6 +31,7 @@ def main():
                 personaje = search.buscarPersonaje(int(aux))
                 if personaje in personajes:
                     raise AttributeError("")
+                personaje[0]+="("+str(len(personajes)+1)+")"
                 personajes.append(personaje)
                 cprint(personajes[len(personajes)-1][0], "yellow")
         except ValueError:
