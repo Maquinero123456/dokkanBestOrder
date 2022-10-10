@@ -4,6 +4,8 @@ import json
 class characterSearch:
     def __init__(self):
         self.url = "https://dokkan.fyi/characters/"
+        self.awakening = ["Super", "Extreme"]
+        self.type = ["AGL", "TEQ", "INT", "STR", "PHY"]
 
     #Search desired character
     def buscarPersonaje(self, id : int) -> list:
@@ -29,9 +31,10 @@ class characterSearch:
         #Add character name to list
         nombre = response.json()["props"]["card"]["name"]
         subnombre = response.json()["props"]["card"]["leader_skill_set"]["name"]
+        tipo = response.json()["props"]["card"]["element"]
+        awakeningType = response.json()["props"]["card"]["awakening_element_type"]
         nombre=nombre.replace('\n', '')
-        dict = [subnombre+" "+nombre+"("+str(id)+")"]
-
+        dict = [subnombre+" "+nombre+" "+str(self.awakening[int(awakeningType)-1])+" "+str(self.type[int(tipo)])+" ("+str(id)+")"]
         #Add all character links skills to list
         x = True
         i = 1
