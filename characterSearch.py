@@ -35,19 +35,6 @@ class characterSearch:
         awakeningType = response.json()["props"]["card"]["awakening_element_type"]
         nombre=nombre.replace('\n', '')
         dict = [subnombre+" "+nombre+" "+str(self.awakening[int(awakeningType)-1])+" "+str(self.type[int(tipo)])+" ("+str(id)+")"]
-        #Add all character links skills to list
-        x = True
-        i = 1
-        a = "link_skill"
-        b = "_id"
-        links = []
-        while x :
-            try:
-                c = a+str(i)+b
-                links.append(response.json()["props"]["card"][c])
-                i+=1
-            except KeyError:
-                x = False
-        dict.append(links)
+        dict.append(response.json()["props"]["card"]["link_skill_ids"])
         #Return list [Name, [Links skills]]
         return dict
